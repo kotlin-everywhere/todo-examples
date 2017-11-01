@@ -19,10 +19,6 @@ compileKotlin2Js {
     kotlinOptions.outputFile = "$project.buildDir.path/classes/main/${project.name}.js"
 }
 
-sourceSets {
-    main.kotlin.srcDirs += '../dcon-front-common'
-}
-
 repositories {
     jcenter()
     maven { url 'https://jitpack.io' }
