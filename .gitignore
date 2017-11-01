@@ -1,0 +1,13 @@
+#gradle
+.gradle/
+
+#node
+node_modules/
+
+#idea
+.idea/
+*.iml
+out/
+
+#general
+build/
