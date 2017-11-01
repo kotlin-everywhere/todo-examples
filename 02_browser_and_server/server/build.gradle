@@ -1,0 +1,41 @@
+buildscript {
+    ext.kotlin_version = '1.1.3-2'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'idea'
+
+apply plugin: 'kotlin'
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+sourceSets {
+    main.kotlin.srcDirs += '../common'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
+    compile 'com.github.kotlin-everywhere:keuse-server:4b2d285f88834f869672364f97aeb2d31f577c31'
+    compile 'com.github.kotlin-everywhere.keuson:keuson-java:5140ff38b732a4da91f82f09b83d9113a0065695'
+}

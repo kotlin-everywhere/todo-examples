@@ -1,0 +1,52 @@
+buildscript {
+    ext.kotlin_version = '1.1.4-3'
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin2js'
+compileKotlin2Js {
+    kotlinOptions.moduleKind = "commonjs"
+    kotlinOptions.sourceMap = true
+    kotlinOptions.metaInfo = true
+    kotlinOptions.main = "noCall"
+    kotlinOptions.outputFile = "$project.buildDir.path/classes/main/${project.name}.js"
+}
+
+sourceSets {
+    main.kotlin.srcDirs += '../common'
+}
+
+repositories {
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
+    compile 'com.github.kotlin-everywhere:keuix-browser:a4755f3e274554b981534ff9b18632eeb1d011b3'
+    compile 'com.github.kotlin-everywhere.keduct-uuid:keduct-uuid-js:92979664059fb5955bdcb0cc8d4e3f023bd7bf80'
+    compile 'com.github.kotlin-everywhere.kelibs-validator:kelibs-validator-js:fae39166f26dbb5407431077f0db6d821b02f97f'
+    compile 'com.github.kotlin-everywhere.keuson:keuson-js:5140ff38b732a4da91f82f09b83d9113a0065695'
+}
+
+build.doLast {
+    (configurations.compile + configurations.testCompile).each { File file ->
+        copy {
+            includeEmptyDirs = false
+
+            from zipTree(file.absolutePath)
+            into "${buildDir}/kotlin-javascript-dependencies"
+            include { fileTreeElement ->
+                def path = fileTreeElement.path
+                path.endsWith(".js") && (path.startsWith("META-INF/resources/") || !path.startsWith("META-INF/"))
+            }
+        }
+    }
+}
