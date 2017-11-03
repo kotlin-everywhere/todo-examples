@@ -24,6 +24,9 @@ compileTestKotlin {
     }
 }
 
+apply plugin: 'application'
+mainClassName = 'todo.ServerKt'
+
 sourceSets {
     main.kotlin.srcDirs += '../common'
 }

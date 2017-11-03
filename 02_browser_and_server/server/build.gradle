@@ -28,6 +28,9 @@ sourceSets {
     main.kotlin.srcDirs += '../common'
 }
 
+apply plugin: 'application'
+mainClassName = 'todo.ServerKt'
+
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
